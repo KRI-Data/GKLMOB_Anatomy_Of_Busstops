@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 10
+names: ['YOLOv8', 'bench', 'board_sign', 'bus', 'cctv', 'road_marking_sign', 'shelter', 'stop_sign', 'street_light', 'trash_bin']
+
+roboflow:
+  workspace: bus-stop-anatomy
+  project: busstop-detection
+  version: 4
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/bus-stop-anatomy/busstop-detection/dataset/4
