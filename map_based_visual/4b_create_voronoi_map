@@ -1,0 +1,76 @@
+import pandas as pd
+import geopandas as gpd
+from shapely.geometry import Point, Polygon
+from shapely.ops import clip_by_rect
+from scipy.spatial import Voronoi
+import matplotlib.pyplot as plt
+import contextily as ctx
+import numpy as np
+
+# --- 1. Load bus stop data ---
+df = pd.read_csv("busstop_quality_with_coordinates.csv")
+
+gdf = gpd.GeoDataFrame(
+    df,
+    geometry=gpd.points_from_xy(df.final_lon, df.final_lat),
+    crs="EPSG:4326"
+)
+
+gdf = gdf.dropna(subset=["final_lon", "final_lat"])
+
+# Project to Web Mercator
+gdf = gdf.to_crs(3857)
+
+# --- 2. Compute Voronoi ---
+coords = np.array([(p.x, p.y) for p in gdf.geometry])
+vor = Voronoi(coords)
+
+# --- 3. Build polygons ---
+polygons = []
+for region_idx in vor.point_region:
+    region = vor.regions[region_idx]
+    if -1 in region or len(region) == 0:
+        polygons.append(None)
+        continue
+    polygon = Polygon([vor.vertices[i] for i in region])
+    polygons.append(polygon)
+
+# --- 4. Clip polygons to bounding box ---
+minx, miny, maxx, maxy = gdf.total_bounds
+bbox = Polygon([(minx, miny), (minx, maxy), (maxx, maxy), (maxx, miny)])
+
+clipped_polygons = [
+    poly.intersection(bbox) if poly is not None else None
+    for poly in polygons
+]
+
+# --- 5. Create Voronoi GeoDataFrame ---
+vor_gdf = gpd.GeoDataFrame(
+    gdf.drop(columns="geometry"),
+    geometry=clipped_polygons,
+    crs=gdf.crs
+)
+
+# Remove empty / invalid polygons
+vor_gdf = vor_gdf[vor_gdf.geometry.notnull()].copy()
+
+# --- 6. Plot Voronoi lattice (translucent) ---
+fig, ax = plt.subplots(figsize=(12, 12))
+
+vor_gdf.plot(
+    column="quality_score_10",
+    cmap="RdYlGn",
+    alpha=0.8,              # <-- translucency
+    linewidth=0.4,
+    edgecolor="black",
+    ax=ax,
+    legend=True
+)
+
+# Add basemap (background map)
+ctx.add_basemap(ax, source=ctx.providers.OpenStreetMap.Mapnik)
+
+plt.title("Bus Stop Quality — Voronoi Lattice Map (Translucent)", fontsize=15)
+plt.axis("off")
+plt.tight_layout()
+plt.show()

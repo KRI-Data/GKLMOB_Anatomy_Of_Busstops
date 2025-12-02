@@ -3,11 +3,11 @@ val: ../valid/images
 test: ../test/images
 
 nc: 10
-names: ['YOLOv8', 'bench', 'board_sign', 'bus', 'cctv', 'road_marking_sign', 'shelter', 'stop_sign', 'street_light', 'trash_bin']
+names: ['bas_road_marking', 'bench', 'board_sign', 'bus', 'rumble_strips', 'shelter', 'stop_sign', 'street_light', 'trash_bin', 'zebra_crossing']
 
 roboflow:
-  workspace: bus-stop-anatomy
-  project: busstop-detection
-  version: 4
+  workspace: anatomy-of-bus-stops-v2
+  project: busstop-detection-vldmg
+  version: 21
   license: CC BY 4.0
-  url: https://universe.roboflow.com/bus-stop-anatomy/busstop-detection/dataset/4
+  url: https://app.roboflow.com/anatomy-of-bus-stops-v2/busstop-detection-vldmg/21
