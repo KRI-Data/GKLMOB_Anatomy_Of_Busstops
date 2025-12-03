@@ -77,7 +77,7 @@ To prepare the dataset for mapping, detection scores were merged with the geogra
 map_based_visual/3_compile_score_and_coord.py
 ```
 
-### **7. Map Visualisation Using Folium**
+### **7. Point Map Visualisation Using Folium**
 
 A point-based colour-graded map was generated via:
 
@@ -86,6 +86,18 @@ map_based_visual/4_create_folium_map.py
 ```
 
 The resulting Folium map displays each bus stop with a colour scale representing its quality score.
+
+---
+
+### **8. Hexagonal Grid Map Visualisation Using h3**
+
+A hexagonal grid map was generated via:
+
+```
+map_based_visual/4b_create_voronoi_map.py
+```
+
+The resulting Folium map displays each bus stop area as a hexagonal cell with the same colour scale as the point map representing its quality score.
 
 ---
 
