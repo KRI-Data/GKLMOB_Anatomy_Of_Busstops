@@ -12,8 +12,8 @@ print(f"✅ Stops left: {len(df)}")
 colormap = cm.LinearColormap(
     colors=['darkred', 'yellow', 'green'],
     vmin=0,
-    vmax=8
-).to_step(8)
+    vmax=10
+).to_step(10)
 
 # --- Black & white map ---
 m = folium.Map(

@@ -1,76 +1,52 @@
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Point, Polygon
-from shapely.ops import clip_by_rect
-from scipy.spatial import Voronoi
-import matplotlib.pyplot as plt
-import contextily as ctx
-import numpy as np
+import folium
+import h3
+import branca.colormap as cm
 
 # --- 1. Load bus stop data ---
 df = pd.read_csv("busstop_quality_with_coordinates.csv")
+df = df.dropna(subset=["final_lat", "final_lon"])
 
-gdf = gpd.GeoDataFrame(
-    df,
-    geometry=gpd.points_from_xy(df.final_lon, df.final_lat),
-    crs="EPSG:4326"
+# --- 2. H3 resolution ---
+h3_res = 7
+
+# --- 3. Map each bus stop to an H3 cell ---
+df['hex_id'] = df.apply(lambda row: h3.latlng_to_cell(row['final_lat'], row['final_lon'], h3_res), axis=1)
+
+
+# --- 4. Aggregate data per hex cell ---
+hex_scores = df.groupby('hex_id')['quality_score_10'].mean().reset_index().rename(columns={'quality_score_10': 'avg_quality'})
+
+# --- 5. Prepare color scale ---
+colormap = cm.LinearColormap(
+    colors=['darkred', 'yellow', 'green'],
+    vmin=0,
+    vmax=10
+).to_step(10)
+colormap.caption = 'Bus Stop Quality Score (0 = Poor, 9 = Good)'
+
+# --- 6. Build Folium map ---
+m = folium.Map(
+    location=[df['final_lat'].mean(), df['final_lon'].mean()],
+    zoom_start=12,
+    tiles='CartoDB Positron'
 )
 
-gdf = gdf.dropna(subset=["final_lon", "final_lat"])
+# --- 7. Add hexagons to map ---
+for _, row in hex_scores.iterrows():
+    boundary = h3.cell_to_boundary(row['hex_id'])
+    # boundary is list of (lat, lng) pairs
+    folium.Polygon(
+        locations=[(lat, lng) for lat, lng in boundary],
+        color='black',
+        weight=0.4,
+        fill=True,
+        fill_color=colormap(row['avg_quality']),
+        fill_opacity=0.7,
+        popup=f"Avg Quality: {row['avg_quality']:.2f}"
+    ).add_to(m)
 
-# Project to Web Mercator
-gdf = gdf.to_crs(3857)
-
-# --- 2. Compute Voronoi ---
-coords = np.array([(p.x, p.y) for p in gdf.geometry])
-vor = Voronoi(coords)
-
-# --- 3. Build polygons ---
-polygons = []
-for region_idx in vor.point_region:
-    region = vor.regions[region_idx]
-    if -1 in region or len(region) == 0:
-        polygons.append(None)
-        continue
-    polygon = Polygon([vor.vertices[i] for i in region])
-    polygons.append(polygon)
-
-# --- 4. Clip polygons to bounding box ---
-minx, miny, maxx, maxy = gdf.total_bounds
-bbox = Polygon([(minx, miny), (minx, maxy), (maxx, maxy), (maxx, miny)])
-
-clipped_polygons = [
-    poly.intersection(bbox) if poly is not None else None
-    for poly in polygons
-]
-
-# --- 5. Create Voronoi GeoDataFrame ---
-vor_gdf = gpd.GeoDataFrame(
-    gdf.drop(columns="geometry"),
-    geometry=clipped_polygons,
-    crs=gdf.crs
-)
-
-# Remove empty / invalid polygons
-vor_gdf = vor_gdf[vor_gdf.geometry.notnull()].copy()
-
-# --- 6. Plot Voronoi lattice (translucent) ---
-fig, ax = plt.subplots(figsize=(12, 12))
-
-vor_gdf.plot(
-    column="quality_score_10",
-    cmap="RdYlGn",
-    alpha=0.8,              # <-- translucency
-    linewidth=0.4,
-    edgecolor="black",
-    ax=ax,
-    legend=True
-)
-
-# Add basemap (background map)
-ctx.add_basemap(ax, source=ctx.providers.OpenStreetMap.Mapnik)
-
-plt.title("Bus Stop Quality — Voronoi Lattice Map (Translucent)", fontsize=15)
-plt.axis("off")
-plt.tight_layout()
-plt.show()
+# --- 8. Add legend & save ---
+colormap.add_to(m)
+m.save('busstop_quality_h3_map.html')
+print("✅ Map saved as 'busstop_quality_h3_map.html'")
