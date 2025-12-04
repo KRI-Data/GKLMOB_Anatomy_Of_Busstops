@@ -37,10 +37,10 @@ final['final_lat'] = merged_B['lat'].combine_first(final['stop_lat'])
 final['final_lon'] = merged_B['lng'].combine_first(final['stop_lon'])
 
 # --- 5. Select and reorder columns ---
-# Find your infra element columns
-infra_cols = [col for col in df_scores.columns if col not in ['stop_id', 'quality_score_raw', 'quality_score_10']]
+# Find your infrastructure element columns (elements of bus stop)
+infra_cols = [col for col in df_scores.columns if col not in ['stop_id', 'quality_score']]
 
-output_cols = ['stop_id', 'final_stop_name', 'final_lon', 'final_lat', 'quality_score_10'] + infra_cols
+output_cols = ['stop_id', 'final_stop_name', 'final_lon', 'final_lat', 'quality_score'] + infra_cols
 
 final_out = final[output_cols].rename(columns={'final_stop_name': 'stop_name'})
 

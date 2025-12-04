@@ -15,14 +15,14 @@ df['hex_id'] = df.apply(lambda row: h3.latlng_to_cell(row['final_lat'], row['fin
 
 
 # --- 4. Aggregate data per hex cell ---
-hex_scores = df.groupby('hex_id')['quality_score_10'].mean().reset_index().rename(columns={'quality_score_10': 'avg_quality'})
+hex_scores = df.groupby('hex_id')['quality_score'].mean().reset_index().rename(columns={'quality_score': 'avg_quality'})
 
 # --- 5. Prepare color scale ---
 colormap = cm.LinearColormap(
     colors=['darkred', 'yellow', 'green'],
     vmin=0,
-    vmax=10
-).to_step(10)
+    vmax=9
+).to_step(9)
 colormap.caption = 'Bus Stop Quality Score (0 = Poor, 9 = Good)'
 
 # --- 6. Build Folium map ---

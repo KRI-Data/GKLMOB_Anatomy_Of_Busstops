@@ -12,8 +12,8 @@ print(f"✅ Stops left: {len(df)}")
 colormap = cm.LinearColormap(
     colors=['darkred', 'yellow', 'green'],
     vmin=0,
-    vmax=10
-).to_step(10)
+    vmax=9
+).to_step(9)
 
 # --- Black & white map ---
 m = folium.Map(
@@ -24,7 +24,7 @@ m = folium.Map(
 
 # --- Add CircleMarkers ---
 for _, row in df.iterrows():
-    score = row['quality_score_10']
+    score = row['quality_score']
     color = colormap(score)
     
     popup_text = (
@@ -45,7 +45,7 @@ for _, row in df.iterrows():
     ).add_to(m)
 
 # --- Add legend ---
-colormap.caption = 'Bus Stop Quality Score (0 = Poor, 10 = Good)'
+colormap.caption = 'Bus Stop Quality Score (0 = Poor, 9 = Good)'
 colormap.add_to(m)
 
 # --- Save ---

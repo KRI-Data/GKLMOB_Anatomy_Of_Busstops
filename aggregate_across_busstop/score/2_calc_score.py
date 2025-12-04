@@ -21,37 +21,40 @@ df_binary = df.copy()
 df_binary[quality_elements] = df_binary[quality_elements].gt(0).astype(int)
 
 # Compute quality score: number of unique elements present
-df_binary['quality_score_raw'] = df_binary[quality_elements].sum(axis=1)
+df_binary['quality_score'] = df_binary[quality_elements].sum(axis=1)
 
 
 
 # Critical elements that identify a bus stop
 critical = ['bas_road_marking', 'board_sign', 'shelter', 'stop_sign']
 # Override score: if NONE of the 4 critical elements exist → score = 0
-df_binary.loc[df_binary[critical].sum(axis=1) == 0, 'quality_score_raw'] = 0
+df_binary.loc[df_binary[critical].sum(axis=1) == 0, 'quality_score'] = 0
 
-# Normalize score to a 0–10 scale
-df_binary['quality_score_10'] = (df_binary['quality_score_raw'] / len(quality_elements)) * 10
 
 # Save to CSV
 df_binary.to_csv('busstop_quality_scores.csv', index=False)
 
 # Compute stats
-mean_score = df_binary['quality_score_10'].mean()
-median_score = df_binary['quality_score_10'].median()
+mean_score = df_binary['quality_score'].mean()
+median_score = df_binary['quality_score'].median()
 
-print(df_binary['quality_score_10'].value_counts().sort_index())
+# Print how many there are of each score
+print(df_binary['quality_score'].value_counts().sort_index())
 
 # Plot histogram
 plt.figure(figsize=(10, 5))
-n, bins, patches = plt.hist(df_binary['quality_score_10'], bins=range(0, 11), color='darkblue', edgecolor='black', rwidth=0.95)
+# n, bins, patches = plt.hist(df_binary['quality_score'], bins=range(0, 10), color='darkblue', edgecolor='black', rwidth=0.95)
+
+plt.hist(df_binary['quality_score'], bins=np.arange(-0.5, 10.5, 1), color='darkblue', edgecolor='black', rwidth=0.95)
+plt.xticks(range(0, 10))
+
 
 # Plot mean and median lines
 plt.axvline(mean_score, color='red', linestyle='--', linewidth=2, label=f'Mean: {mean_score:.2f}')
 plt.axvline(median_score, color='skyblue', linestyle='--', linewidth=2, label=f'Median: {median_score:.2f}')
 
 # Title and labels
-plt.title('🇲🇾 Distribution of Malaysia Bus Stop Quality Scores (0–10)')
+plt.title('🇲🇾 Distribution of Malaysia Bus Stop Quality Scores (0–9)')
 plt.xlabel('Quality Score')
 plt.ylabel('Number of Bus Stops')
 plt.legend()
