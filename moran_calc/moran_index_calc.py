@@ -19,7 +19,7 @@ w = KNN.from_array(coords, k=8)
 w.transform = "r"  # row-standardize
 
 # 5) Extract the variable
-y = df_clean['quality_score_10'].values
+y = df_clean['quality_score'].values
 
 # 6) Compute Moran's I
 moran = Moran(y, w, permutations=999)
