@@ -94,7 +94,7 @@ The resulting Folium map displays each bus stop with a colour scale representing
 A hexagonal grid map was generated via:
 
 ```
-map_based_visual/4b_create_voronoi_map.py
+map_based_visual/4b_create_h3_map.py
 ```
 
 The resulting Folium map displays each bus stop area as a hexagonal cell with the same colour scale as the point map representing its quality score.
