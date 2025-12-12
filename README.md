@@ -143,7 +143,7 @@ GKLMOB_Busstop_object_detection/
 ---
 
 ## Links to Map Visualisations (Hosted on Vercel)
-* 1. Dot Map Visualisation: [text](https://new-gklmob-busstop-object-detection-kappa.vercel.app/)
-* 2. H3 Map Visualitation: [text](https://new-gklmob-busstop-object-detection-pi.vercel.app/)
+* 1. Dot Map Visualisation: [dot map vis](https://new-gklmob-busstop-object-detection-kappa.vercel.app/)
+* 2. H3 Map Visualitation: [h3 map vis](https://new-gklmob-busstop-object-detection-pi.vercel.app/)
 
 ---
