@@ -25,7 +25,7 @@ colormap = cm.LinearColormap(
 ).to_step(9)
 colormap.caption = 'Bus Stop Quality Score (0 = Poor, 9 = Good)'
 
-# --- 6. Build Folium map ---
+# --- 6. Build Folium map (black and white) ---
 m = folium.Map(
     location=[df['final_lat'].mean(), df['final_lon'].mean()],
     zoom_start=12,
@@ -50,7 +50,7 @@ for _, row in hex_scores.iterrows():
 
 
 
-# --- 8. Add legend that matches the map colors ---
+# --- 8. Add vertical legend that matches the map colors ---
 
 legend_html = """
 <div style="
