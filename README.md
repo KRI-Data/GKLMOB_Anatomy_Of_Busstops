@@ -87,6 +87,8 @@ map_based_visual/4_create_folium_map.py
 
 The resulting Folium map displays each bus stop with a colour scale representing its quality score.
 
+Links to both map visualisations are attached at the bottom of this document.
+
 ---
 
 ### **8. Hexagonal Grid Map Visualisation Using h3**
@@ -137,5 +139,11 @@ GKLMOB_Busstop_object_detection/
 * Introduce weighting to improve score accuracy
 * Use more robust detection models for harder objects
 * Add clustering or hotspot analysis
+
+---
+
+## Links to Map Visualisations (Hosted on Vercel)
+* 1. Folium Map Visualisation: [text](https://new-gklmob-busstop-object-detection-kappa.vercel.app/)
+* 2. H3 Map Visualitation: [text](https://new-gklmob-busstop-object-detection-pi.vercel.app/)
 
 ---
