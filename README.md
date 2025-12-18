@@ -15,6 +15,11 @@ The primary goals of this project are to:
 ---
 
 ## 🔄 Workflow Overview
+❗Before continuing, install all required dependencies using:
+
+pip install -r requirements.txt
+
+All scripts and notebooks assume the required packages are installed beforehand.
 
 Below is the complete processing flow from annotation → scoring → map visualisation:
 
