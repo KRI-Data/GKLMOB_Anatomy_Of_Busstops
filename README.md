@@ -15,7 +15,7 @@ The primary goals of this project are to:
 ---
 
 ## 🔄 Workflow Overview
-❗Before continuing, install all required dependencies using:
+❗Before continuing, install all required dependencies by running the following command in the terminal:
 
 pip install -r requirements.txt
 
