@@ -15,13 +15,15 @@ The primary goals of this project are to:
 ---
 
 ## 🔄 Workflow Overview
-❗Before continuing, install all required dependencies by running the following command in the terminal:
+Below is the complete processing flow from annotation → scoring → map visualisation:
+
+### **❗Pre-Requisite Installation**
+Before continuing, install all required dependencies by running the following command in the terminal:
 
 pip install -r requirements.txt
 
 All scripts and notebooks assume the required packages are installed beforehand.
 
-Below is the complete processing flow from annotation → scoring → map visualisation:
 
 ### **1. Image Annotation**
 
