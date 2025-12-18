@@ -82,7 +82,7 @@ map_based_visual/3_compile_score_and_coord.py
 A point-based colour-graded map was generated via:
 
 ```
-map_based_visual/4_create_folium_map.py
+map_based_visual/4_create_point_map.py
 ```
 
 The resulting Folium map displays each bus stop with a colour scale representing its quality score.
@@ -115,7 +115,8 @@ GKLMOB_Busstop_object_detection/
 │
 ├── map_based_visual/
 │   ├── 3_compile_score_and_coord.py
-│   └── 4_create_folium_map.py
+│   ├── 4_create_point_map.py
+│   └── 4b_create_h3_map.py
 │
 ├── results_labels.yolov8
 ├── data.yaml
@@ -130,7 +131,7 @@ GKLMOB_Busstop_object_detection/
 * Aggregated object counts for each bus stop
 * Presence-based infrastructure score
 * Final dataset combining coordinates + scores
-* An interactive Folium map for exploration and decision-making
+* An interactive point map and hexagonal map for exploration and decision-making
 
 ---
 
@@ -143,7 +144,7 @@ GKLMOB_Busstop_object_detection/
 ---
 
 ## Links to Map Visualisations (Hosted on Vercel)
-* 1. Dot Map Visualisation: [dot map vis](https://new-gklmob-busstop-object-detection-kappa.vercel.app/)
+* 1. Point Map Visualisation: [point map vis](https://new-gklmob-busstop-object-detection-three.vercel.app/)
 * 2. H3 Map Visualitation: [h3 map vis](https://new-gklmob-busstop-object-detection-pi.vercel.app/)
 
 ---
