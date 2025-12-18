@@ -2,6 +2,7 @@ import pandas as pd
 import folium
 import h3
 import branca.colormap as cm
+import os
 
 # --- 1. Load bus stop data ---
 df = pd.read_csv("busstop_quality_with_coordinates.csv")
@@ -131,5 +132,10 @@ legend_html = """
 # Inject into Folium map
 m.get_root().html.add_child(folium.Element(legend_html))
 
-m.save('busstop_quality_h3_map.html')
-print("✅ Map saved as 'busstop_quality_h3_map.html'")
+# --- Save to file ---
+output_dir = "h3_map_html"
+os.makedirs(output_dir, exist_ok=True)
+
+m.save(os.path.join(output_dir, "index.html"))
+
+print("✅ Map saved as 'h3_map_html/index.html'")

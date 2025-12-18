@@ -1,6 +1,7 @@
 import pandas as pd
 import folium
 import branca.colormap as cm
+import os
 
 # --- Load your data ---
 df = pd.read_csv('busstop_quality_with_coordinates.csv')
@@ -125,8 +126,10 @@ legend_html = """
 # Inject into Folium map
 m.get_root().html.add_child(folium.Element(legend_html))
 
+# --- Save to file ---
+output_dir = "point_map_html"
+os.makedirs(output_dir, exist_ok=True)
 
+m.save(os.path.join(output_dir, "index.html"))
 
-# --- Save ---
-m.save('busstop_quality_map_colored.html')
-print("✅ Map saved as 'busstop_quality_map_colored.html'")
+print("✅ Map saved as 'point_map_html/index.html'")
