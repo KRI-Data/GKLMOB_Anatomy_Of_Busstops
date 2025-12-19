@@ -3,6 +3,8 @@ import folium
 import branca.colormap as cm
 import os
 
+""" Script to create a point map of bus stop quality scores """
+
 # --- Load your data ---
 df = pd.read_csv('busstop_quality_with_coordinates.csv')
 

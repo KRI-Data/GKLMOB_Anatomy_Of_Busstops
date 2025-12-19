@@ -4,6 +4,8 @@ import h3
 import branca.colormap as cm
 import os
 
+""" Script to create an H3 hexagon map of bus stop quality scores """
+
 # --- 1. Load bus stop data ---
 df = pd.read_csv("busstop_quality_with_coordinates.csv")
 df = df.dropna(subset=["final_lat", "final_lon"])
