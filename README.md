@@ -20,7 +20,9 @@ Below is the complete processing flow from annotation → scoring → map visual
 ### **❗Pre-Requisite Installation**
 Before continuing, install all required dependencies by running the following command in the terminal:
 
+```
 pip install -r requirements.txt
+```
 
 All scripts and notebooks assume the required packages are installed beforehand.
 
