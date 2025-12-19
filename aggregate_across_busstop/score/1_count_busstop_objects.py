@@ -14,7 +14,6 @@ with open('data.yaml', 'r') as f:
 # Parse all detection .txt files
 results_folder = 'result_labels.yolov8'
 records = []
-print("hello")
 
 
 for filename in os.listdir(results_folder):
@@ -32,7 +31,6 @@ for filename in os.listdir(results_folder):
         # Extract stop_id
         stop_id_match = re.match(r'stop_(\d+)_h\d+', clean_name)
         if not stop_id_match:
-            print("hello2")
             continue
         stop_id = stop_id_match.group(1)
 
