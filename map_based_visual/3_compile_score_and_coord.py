@@ -2,6 +2,7 @@ import pandas as pd
 
 
 """ Script to merge bus stop quality scores with coordinates"""
+
 # --- 1. Load your files ---
 # Data A: TXT coordinates
 df_A = pd.read_csv('busstop_coordinates.txt')
