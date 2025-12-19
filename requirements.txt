@@ -8,4 +8,3 @@ h3
 libpysal
 esda
 openpyxl
-re
