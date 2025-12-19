@@ -2,6 +2,13 @@ import pandas as pd
 import numpy as np
 from libpysal.weights import KNN
 from esda.moran import Moran
+import numpy as np
+
+
+""" Script to calculate Moran's I for bus stop quality scores"""
+
+# Set random seed for reproducibility of simulation-based p-values and z-scores
+np.random.seed(27)
 
 # 1) Load CSV
 df = pd.read_csv("busstop_quality_with_coordinates.csv")
@@ -9,7 +16,7 @@ df = pd.read_csv("busstop_quality_with_coordinates.csv")
 # 2) Convert bad coordinates to NaN and drop them
 df['final_lon'] = pd.to_numeric(df['final_lon'], errors='coerce')
 df['final_lat'] = pd.to_numeric(df['final_lat'], errors='coerce')
-df_clean = df[np.isfinite(df['final_lon']) & np.isfinite(df['final_lat'])]
+df_clean = df[np.isfinite(df['final_lon']) & np.isfinite(df['final_lat'])] # only keep rows with valid coordinates
 
 # 3) Build coordinates array
 coords = df_clean[['final_lon', 'final_lat']].to_numpy()
