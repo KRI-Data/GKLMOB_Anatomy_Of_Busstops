@@ -38,8 +38,8 @@ df_binary.to_csv('busstop_quality_scores.csv', index=False)
 mean_score = df_binary['quality_score'].mean()
 median_score = df_binary['quality_score'].median()
 
-# Print how many there are of each score
-print(df_binary['quality_score'].value_counts().sort_index())
+# Print how many there are of each score (optional)
+# print(df_binary['quality_score'].value_counts().sort_index())
 
 # Plot histogram
 plt.figure(figsize=(10, 5))
@@ -64,13 +64,5 @@ plt.savefig('quality_distribution_histogram.png', dpi=300)
 plt.show()
 
 # Print average
-# print(f"🇲🇾 Average Bus Stop Quality Score: {mean_score:.2f}/10")
-
-
-score_df = pd.read_csv('busstop_quality_with_coordinates.csv')
-
-
-print(score_df.head(20))
-
-
+print(f"🇲🇾 Average Bus Stop Quality Score: {mean_score:.2f}/10")
 
