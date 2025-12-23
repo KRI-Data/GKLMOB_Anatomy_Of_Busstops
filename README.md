@@ -62,7 +62,7 @@ It was used by later scripts to correctly translate YOLO class IDs into class na
 The script below iterates through all labels and aggregates object counts per bus stop:
 
 ```
-aggregate_across_busstop/score/1_count_busstop_objects.py
+aggregate_across_busstop/1_count_busstop_objects.py
 ```
 
 Output: A structured table storing counts of each detected object for every bus stop.
@@ -72,7 +72,7 @@ Output: A structured table storing counts of each detected object for every bus 
 Next, a presence-based scoring system was applied:
 
 ```
-aggregate_across_busstop/score/2_calc_score.py
+aggregate_across_busstop/2_calc_score.py
 ```
 
 Each bus stop is assigned a score based on whether key elements (shelter, bench, lighting, etc.) are present.
@@ -118,9 +118,8 @@ The resulting Folium map displays each bus stop area as a hexagonal cell with th
 GKLMOB_Busstop_object_detection/
 │
 ├── aggregate_across_busstop/
-│   └── score/
-│       ├── 1_count_busstop_objects.py
-│       └── 2_calc_score.py
+│   ├── 1_count_busstop_objects.py
+│   └── 2_calc_score.py
 │
 ├── map_based_visual/
 │   ├── 3_compile_score_and_coord.py
