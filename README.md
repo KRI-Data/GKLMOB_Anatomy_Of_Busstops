@@ -17,6 +17,7 @@ The primary goals of this project are to:
 ## 🔄 Workflow Overview
 Below is the complete processing flow from annotation → scoring → map visualisation:
 
+
 ### **❗Pre-Requisite Installation**
 Before continuing, install all required dependencies by running the following command in the terminal:
 
@@ -32,7 +33,8 @@ All scripts and notebooks assume the required packages are installed beforehand.
 Images were annotated with the assistance of a custom model trained on **Roboflow**.
 The model was used to pre-label bus-stop-related objects, and all annotations were manually verified.
 
-**Caveat**: The bus stop detection model is still under development and not fully accurate. All images were manually verified and corrected by humans— the model was used only as a helper tool, not as the sole annotator.
+#### ** ❗Annotation Methodology Disclaimer**
+Annotations were generated using a Roboflow-trained model with label assist and human intervention. Because manual corrections were applied, the dataset is not perfectly reproducible. The model is actively being improved and is approaching reliability for autonomous annotation.
 
 ### **2. Export YOLOv8 Labels**
 
@@ -146,7 +148,7 @@ GKLMOB_Busstop_object_detection/
 
 ## 🚀 Future Improvements
 
-* Introduce weighting to improve score accuracy
+* Introduce weighting to improve quality score accuracy
 * Use more robust detection models for harder objects
 * Add clustering or hotspot analysis
 
