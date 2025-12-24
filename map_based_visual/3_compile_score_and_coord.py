@@ -4,10 +4,10 @@ import pandas as pd
 """ Script to merge bus stop quality scores with coordinates"""
 
 # --- 1. Load your files ---
-# Data A: TXT coordinates
+# Data A: Bus stop coordinates derived from GTFS Static Data
 df_A = pd.read_csv('busstop_coordinates.txt')
 
-# Data B: XLSX coordinates
+# Data B: Bus stop coordinates derived from OpenStreetMap (OSM)
 df_B = pd.read_excel('busstop_coordinates_B.xlsx')
 
 # Scores: already processed with binary presence + score

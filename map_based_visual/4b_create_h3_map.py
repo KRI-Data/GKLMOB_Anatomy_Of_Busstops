@@ -14,6 +14,7 @@ df = df.dropna(subset=["final_lat", "final_lon"])
 h3_res = 7
 
 # --- 3. Map each bus stop to an H3 cell ---
+# latlng_to_cell determines which hexagon on the map a point falls into
 df['hex_id'] = df.apply(lambda row: h3.latlng_to_cell(row['final_lat'], row['final_lon'], h3_res), axis=1)
 
 
@@ -38,6 +39,7 @@ m = folium.Map(
 
 # --- 7. Add hexagons to map ---
 for _, row in hex_scores.iterrows():
+    # cell_to_boundary gives the polygon boundary of the hexagon
     boundary = h3.cell_to_boundary(row['hex_id'])
     # boundary is list of (lat, lng) pairs
     folium.Polygon(
