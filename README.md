@@ -33,23 +33,33 @@ All scripts and notebooks assume the required packages are installed beforehand.
 Images were annotated with the assistance of a custom model trained on **Roboflow**.
 The model was used to pre-label bus-stop-related objects, and all annotations were manually verified.
 
-#### ** ❗Annotation Methodology Disclaimer**
+#### **❗Annotation Methodology Disclaimer**
 Annotations were generated using a Roboflow-trained model with label assist and human intervention. Because manual corrections were applied, the dataset is not perfectly reproducible. The model is actively being improved and is approaching reliability for autonomous annotation.
 
 ### **2. Export YOLOv8 Labels**
 
-Annotated datasets were exported in **YOLOv8 format**, producing:
+The annotated dataset source can be viewed and downloaded from the following Roboflow Universe link:  
+https://universe.roboflow.com/anatomy-of-bus-stops-v2/busstop-detection-vldmg/dataset/21
 
-* `images/`
-* `labels/`
-* **`data.yaml`**
+Annotated images were exported in **YOLOv8 format** and downloaded to the local machine. This export automatically generated the following directory structure:
 
-The `data.yaml` file contains the class index-to-name mapping used during training.
-This mapping is important later when interpreting YOLO label files and identifying which object class was detected.
+- `images/`  
+- `labels/`  
+- `data.yaml`  
+
+The `data.yaml` file was extracted and placed at the top level of the repository. This file contains the **class index-to-name mapping** used during annotation and model training.  
+This mapping is required later to correctly interpret YOLO label files and to identify which object class is present when recording object presence at each bus stop.
+
+#### **⚠️ YOLOv8 File Format Disclaimer**
+
+YOLOv8 was used **only as an annotation export format** to obtain structured text files containing bounding box information.  
+The YOLOv8 model itself was **not used for training**. All model training and inference were performed using the **RF-DETR** models.
+
+---
 
 ### **3. Label Extraction**
 
-All YOLOv8 labels were extracted and compiled into a single file:
+All YOLOv8 label files were extracted from the `labels/` directory and consolidated into a single file:
 
 ```
 results_labels.yolov8
