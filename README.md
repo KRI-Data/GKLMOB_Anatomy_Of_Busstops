@@ -4,6 +4,8 @@
 
 This project focuses on detecting, classifying, and scoring bus stops across Klang Valley using computer vision and geospatial analysis. By combining object detection models, annotation workflows, and automated scoring logic, the project aims to support smart-city planning, public transport analysis, and infrastructure assessment.
 
+The pipeline takes YOLO-formatted labels, aggregates object presence per stop, assigns quality scores, joins scores with coordinates, and produces interactive point and H3 hex maps for exploration. The repo also includes a Moran’s I script for spatial autocorrelation of the scores.
+
 The primary goals of this project are to:
 
 * Automatically detect bus stops and related elements using computer vision.
@@ -11,6 +13,28 @@ The primary goals of this project are to:
 * Quantify the quality of each bus stop using a presence-based scoring system.
 * Generate a reproducible pipeline for processing labels, aggregating object counts, computing scores, and visualizing results.
 * Produce an interactive map for exploration and spatial analysis.
+
+---
+
+## 📦 Project Structure
+
+```
+GKLMOB_Busstop_object_detection/
+│
+├── aggregate_across_busstop/
+│   ├── 1_count_busstop_objects.py
+│   └── 2_calc_score.py
+│
+├── map_based_visual/
+│   ├── 3_compile_score_and_coord.py
+│   ├── 4_create_point_map.py
+│   └── 4b_create_h3_map.py
+│
+├── results_labels.yolov8
+├── data.yaml
+└── README.md
+
+```
 
 ---
 
@@ -124,33 +148,21 @@ The resulting Folium map displays each bus stop area as a hexagonal cell with th
 
 ---
 
-## 📦 Project Structure
+### (Optional) Spatial autocorrelation — Moran’s I
+ 
+Moran’s I was computed on busstop_quality_with_coordinates.csv using k-NN weights (k=8).
 
 ```
-GKLMOB_Busstop_object_detection/
-│
-├── aggregate_across_busstop/
-│   ├── 1_count_busstop_objects.py
-│   └── 2_calc_score.py
-│
-├── map_based_visual/
-│   ├── 3_compile_score_and_coord.py
-│   ├── 4_create_point_map.py
-│   └── 4b_create_h3_map.py
-│
-├── results_labels.yolov8
-├── data.yaml
-└── README.md
-
+moran_calc/moran_index_calc.py
 ```
 
----
 
 ## 🗺️ Output
 
 * Aggregated object counts for each bus stop
 * Presence-based infrastructure score
 * Final dataset combining coordinates + scores
+* Histogram score distribution plot
 * An interactive point map and hexagonal map for exploration and decision-making
 
 ---
